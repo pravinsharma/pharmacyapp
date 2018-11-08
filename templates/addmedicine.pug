@@ -1,0 +1,64 @@
+doctype html
+html
+  include includes/head.pug
+  body
+    include includes/header.pug
+
+    .main.container
+        h1 Add Medicine
+        p Please add details to store in our records
+
+        form(action='/addmedicine', method='post')
+            .row.form-group
+                .col-xl-3
+                    label.control-label.requiredField(for='name')
+                        | Medicine Name
+                        span.asteriskField *
+                .col-xl-9
+                    input.form-control( type='text' name='name' )
+            .row.form-group
+                .col-xl-3
+                    label.control-label.requiredField(for='manufacturer')
+                        | Manufacturer
+                        span.asteriskField *
+                .col-xl-9
+                    input.form-control( type='text' name='manufacturer' )
+            .row.form-group
+                .col-xl-3
+                    label.control-label.requiredField(for='batchno')
+                        | Batch Number
+                        span.asteriskField *
+                .col-xl-9
+                    input.form-control( type='number' name='batchno' )
+            .row.form-group
+                .col-xl-3
+                    label.control-label.requiredField(for='expiry')
+                        | Expiration Date
+                        span.asteriskField *
+                .col-xl-9
+                    input.form-control( type='date' name='expiry' )
+            .row.form-group
+                .col-xl-3
+                    label.control-label.requiredField(for='price')
+                        | Price
+                        span.asteriskField *
+                .col-xl-9
+                    input.form-control( type='text' name='price' )
+            .row.form-group
+                .col-xl-3
+                    label.control-label.requiredField(for='type')
+                        | Medicine Type
+                        span.asteriskField *
+                .col-xl-9
+                    select#propertyType.select.form-control.input-lg(name='type')
+                        option(value='0') -- Select --
+                        option(value='1') Capsule
+                        option(value='2') Tablet
+                        option(value='3') Syrup
+                        option(value='4') Gel
+            .row.form-group
+                .col-xl-12
+                    input.btn.btn-primary(type='submit', value='Submit')
+
+
+    include includes/footer.pug

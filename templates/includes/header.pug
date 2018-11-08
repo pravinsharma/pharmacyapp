@@ -1,0 +1,16 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      a.navbar-brand(href='#') Pharmacy
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/addmedicine')
+              | Add Medicine
+              span.sr-only (current)
+          li.nav-item.active
+            a.nav-link(href='/viewmedicine') View Medicine
+          li.nav-item
+            a.nav-link(href='/editmedicine') Update Medicine
+          li.nav-item
+            a.nav-link(href='/deletemedicine') Delete Medicine

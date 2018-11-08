@@ -1,0 +1,60 @@
+doctype html
+html
+  include includes/head.pug
+  body
+    include includes/header.pug
+
+    .main.fluid-container
+        h1 Modify Medicine
+        p Please add details to update the records
+
+        .row.form-group
+            .col-xl-12
+                table.table.table-striped.table-dark(style="margin-bottom: 0;")
+                    thead
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Name
+                            th(scope='col') Manufacturer
+                            th(scope='col') Batch#
+                            th(scope='col') Expires
+                            th(scope='col') Price
+                            th(scope='col') Type
+                            th(scope='col') Action
+                    tbody
+                        for item in jsonObj
+                            -
+                                var id = JSON.stringify( item.id ).replace(/\"/g, "")
+                                var name = JSON.stringify( item.name ).replace(/\"/g, "")
+                                var manufacturer = JSON.stringify( item.manufacturer ).replace(/\"/g, "")
+                                var batchno = JSON.stringify( item.batchno ).replace(/\"/g, "")
+                                var expiry = JSON.stringify( item.expiry ).replace(/\"/g, "")
+                                var price = JSON.stringify( item.price ).replace(/\"/g, "")
+                                var type = JSON.stringify( item.type ).replace(/\"/g, "")
+                            form(action='/action_edit', method='post')
+                                tr
+                                    th(scope='row')
+                                        input( type='hidden' name='medicineid' id='medicineid' value=id)
+                                        | #{id}
+                                    td
+                                        input.form-control( type='text' name='name' id='name' value=name)
+                                    td
+                                        input.form-control( type='text' name='manufacturer' id='manufacturer' value=manufacturer)
+                                    td
+                                        input.form-control( type='number' name='batchno' id='batchno' value=batchno)
+                                    td
+                                        input.form-control( type='date' name='expiry' id='expiry' value=expiry)
+                                    td
+                                        input.form-control( type='text' name='price' id='price' value=price)
+                                    td
+                                        select#propertyType.select.form-control.input-lg(name='type')
+                                            option(value='0') -- Select --
+                                            option(value='1') Capsule
+                                            option(value='2') Tablet
+                                            option(value='3') Syrup
+                                            option(value='4') Gel
+                                    td
+                                        input.btn.btn-primary(type='submit', value='Submit')
+
+
+    include includes/footer.pug

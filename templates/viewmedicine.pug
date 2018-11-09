@@ -4,7 +4,7 @@ html
   body
     include includes/header.pug
     
-    .main.container
+    .main.fluid-container
         h1 View Medicine
         
         .row.form-group
@@ -32,7 +32,7 @@ html
                                 td !{JSON.stringify( item.price ).replace(/\"/g, "")}
                                 td !{JSON.stringify( item.type ).replace(/\"/g, "")}
                                 td.form-group
-                                    form(action='/deletemedicine', method='post')
+                                    form(action='/deletemedicine', method='post', style='float: left;')
                                         input( type='hidden' name='medicineid' id='medicineid' value=id)
                                         input.btn.btn-primary(type='submit', value='Delete', style='margin: 0 10px;')
                                     form(action='/editmedicine', method='post')

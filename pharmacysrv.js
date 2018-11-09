@@ -44,8 +44,14 @@ http.createServer(function (req, res) {
             
             console.log('A chunk of data has arrived: ', data.medicineid);
 
-            for(var i=0; i<data.medicineid.length; i++)
-                json.data.splice( json.data.indexOf(data.medicineid[i]), 1 );
+            for(var i=0; i<data.medicineid.length; i++) {
+                for(var j=0; j<json.data.length; j++) {
+                  if(JSON.stringify(json.data[j]).indexOf(data.medicineid[i]) != -1) {
+                    json.data.splice( j, 1 );
+                    break;
+                  }
+                }
+            }
 
             viewpage(res, './templates/deletemedicine.pug');
         });

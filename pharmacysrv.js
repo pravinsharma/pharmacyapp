@@ -5,7 +5,7 @@ const crypto = require("crypto");
 
 var json = {'data' : []};
 http.createServer(function (req, res) {
-    if (req.url == '/addmedicine') {
+    if (req.url == '/action_add') {
         
         req.on('data', chunk => {
             const data = qs.parse(chunk.toString());
@@ -15,9 +15,7 @@ http.createServer(function (req, res) {
             json.data.push( data );
             console.log('A chunk of data has arrived: ', json);
 
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write("Saved.");
-            res.end();
+            viewpage(res, './templates/editmedicine.pug');
         });
         req.on('end', () => {
             console.log('No more data');
@@ -33,15 +31,12 @@ http.createServer(function (req, res) {
             json.data.splice( json.data.indexOf(data.medicineid), 1 );
             json.data.push( data );
 
-            editmedicine(res);
+            viewpage(res, './templates/editmedicine.pug');
         });
         req.on('end', () => {
             console.log('No more data');
         });
-    } else if (req.url == '/viewmedicine') {
-
-        viewmedicine(res);
-    } else if (req.url == '/deletemedicine') {
+    } else if (req.url == '/action_delete') {
         console.log('delete...');
 
         req.on('data', chunk => {
@@ -49,17 +44,18 @@ http.createServer(function (req, res) {
             
             console.log('A chunk of data has arrived: ', data.medicineid);
 
-            json.data.splice( json.data.indexOf(data.medicineid), 1 );
+            for(var i=0; i<data.medicineid.length; i++)
+                json.data.splice( json.data.indexOf(data.medicineid[i]), 1 );
 
-            viewmedicine(res);
+            viewpage(res, './templates/deletemedicine.pug');
         });
         req.on('end', () => {
             console.log('No more data');
         });
-    } else if (req.url == '/editmedicine') {
-        console.log('edit...');
+    } else if (req.url == '/viewmedicine' || req.url == '/deletemedicine' || req.url == '/editmedicine') {
+        console.log(req.url + '...');
 
-        editmedicine(res);
+        viewpage(res, './templates' + req.url + '.pug');
     } else {
 
         // Compile a function
@@ -71,22 +67,10 @@ http.createServer(function (req, res) {
     }
 }).listen(8080);
 
-function viewmedicine(res) {
+function viewpage(res, template) {
 
     // Compile a function
-    const html = pug.compileFile('./templates/viewmedicine.pug');
-    var jsonStr = JSON.stringify(json);
-    console.log(jsonStr);
-
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write( html({jsonObj: json.data }) );
-    res.end();
-}
-
-function editmedicine(res) {
-
-    // Compile a function
-    const html = pug.compileFile('./templates/editmedicine.pug');
+    const html = pug.compileFile(template);
     var jsonStr = JSON.stringify(json);
     console.log(jsonStr);
 

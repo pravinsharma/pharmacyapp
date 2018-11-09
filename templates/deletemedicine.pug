@@ -14,7 +14,7 @@ html
                     table.table.table-striped.table-dark(style="margin-bottom: 0;")
                         thead
                             tr
-                                th(scope='col') #
+                                th(scope='col') *
                                 th(scope='col') Name
                                 th(scope='col') Manufacturer
                                 th(scope='col') Batch#
@@ -33,14 +33,13 @@ html
                                     var type = JSON.stringify( item.type ).replace(/\"/g, "")
                                 tr
                                     th(scope='row')
-                                        input( type='hidden' name='medicineid' id='medicineid' value=id)
-                                        | #{id}
+                                        input( type='checkbox' name='medicineid' id='medicineid' value=id)
                                     td #{name}
                                     td #{manufacturer}
                                     td #{batchno}
                                     td #{expiry}
                                     td #{price}
                                     td #{type}
-                    input.btn.btn-primary(type='submit', value='Submit')
+                    input.btn.btn-primary(type='submit', value='Submit', style='margin: 10px; float: right;')
 
     include includes/footer.pug

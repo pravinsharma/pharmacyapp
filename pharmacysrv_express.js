@@ -72,7 +72,11 @@ app.post('/action_delete', function (req, res) {
         
         console.log('A chunk of data has arrived: ', data.medicineid);
 
-        for(var i=0; i<data.medicineid.length; i++) {
+        if( data.medicineid instanceof Array) {
+            for(var i=0; i<data.medicineid.length; i++) {
+                myapp.removejson(data.medicineid[i]);
+            }
+        } else {
             myapp.removejson(data.medicineid[i]);
         }
 

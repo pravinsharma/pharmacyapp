@@ -32,10 +32,10 @@ html
                                 td !{JSON.stringify( item.price ).replace(/\"/g, "")}
                                 td !{JSON.stringify( item.type ).replace(/\"/g, "")}
                                 td.form-group
-                                    form(action='/deletemedicine', method='post', style='float: left;')
+                                    form(action='/action_delete', method='post', style='float: left;')
                                         input( type='hidden' name='medicineid' id='medicineid' value=id)
                                         input.btn.btn-primary(type='submit', value='Delete', style='margin: 0 10px;')
-                                    form(action='/editmedicine', method='post')
+                                    form(action='/action_edit', method='post')
                                         input( type='hidden' name='medicineid' id='medicineid'  value=id)
                                         input.btn.btn-primary(type='submit', value='Edit')
 

@@ -28,9 +28,9 @@ http.createServer(function (req, res) {
             
             console.log('A chunk of data has arrived: ', data);
 
-            json.data.splice( json.data.indexOf(data.medicineid), 1 );
+            removejson(data.medicineid);
             json.data.push( data );
-
+            
             viewpage(res, './templates/editmedicine.pug');
         });
         req.on('end', () => {
@@ -45,12 +45,7 @@ http.createServer(function (req, res) {
             console.log('A chunk of data has arrived: ', data.medicineid);
 
             for(var i=0; i<data.medicineid.length; i++) {
-                for(var j=0; j<json.data.length; j++) {
-                  if(JSON.stringify(json.data[j]).indexOf(data.medicineid[i]) != -1) {
-                    json.data.splice( j, 1 );
-                    break;
-                  }
-                }
+                removejson(data.medicineid[i]);
             }
 
             viewpage(res, './templates/deletemedicine.pug');
@@ -72,6 +67,17 @@ http.createServer(function (req, res) {
         res.end();
     }
 }).listen(8080);
+
+function removejson(medicineid) {
+
+    //iterate and remove data
+    for(var i=0; i<json.data.length; i++) {
+        if(JSON.stringify(json.data[i]).indexOf(medicineid) != -1) {
+            json.data.splice( i, 1 );
+            break;
+        }
+    }
+}
 
 function viewpage(res, template) {
 

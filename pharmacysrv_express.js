@@ -5,7 +5,8 @@ const crypto = require("crypto");
 var express = require('express')
 var app = express()
 
-var myapp = {'json' : []};
+
+/* ---------VIEW ROUTER--------- */
 
 // all views
 app.get('/*', function (req, res) {
@@ -25,7 +26,9 @@ app.get('/*', function (req, res) {
     }
 });
 
-// action for addition of medicine
+/* ---------ACTION ROUTER--------- */
+
+// addition of medicine
 app.post('/action_add', function (req, res) {
     console.log('action: add...');
         
@@ -44,7 +47,7 @@ app.post('/action_add', function (req, res) {
     });
 });
 
-// action for modification of medicine
+// modification of medicine
 app.post('/action_edit', function (req, res) {
     console.log('action: edit...');
     
@@ -63,7 +66,7 @@ app.post('/action_edit', function (req, res) {
     });
 });
 
-// action for deletion of medicines
+// deletion of medicines
 app.post('/action_delete', function (req, res) {
     console.log('delete...');
 
@@ -89,6 +92,12 @@ app.post('/action_delete', function (req, res) {
 
 app.listen(8080);
 
+
+/* ---------GLOBAL VARS/UTILITIES--------- */
+
+var myapp = {'json' : []};
+
+// remove json by id
 myapp.removejson = function(medicineid) {
 
     //iterate and remove data
@@ -100,6 +109,7 @@ myapp.removejson = function(medicineid) {
     }
 }
 
+// view page from template
 myapp.viewpage = function(res, template) {
 
     // Compile a function
@@ -111,26 +121,3 @@ myapp.viewpage = function(res, template) {
     res.write( html({jsonObj: myapp.json }) );
     res.end();
 }
-
-/*
-http.createServer(function (req, res) {
-    if (req.url == '/action_add') {
-    } else if (req.url == '/action_edit') {
-    } else if (req.url == '/action_delete') {
-    } else if (req.url == '/viewmedicine' || req.url == '/deletemedicine' || req.url == '/editmedicine') {
-        console.log(req.url + '...');
-
-        viewpage(res, './templates' + req.url + '.pug');
-    } else {
-
-        // Compile a function
-        const html = pug.compileFile('./templates/addmedicine.pug');
-
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(html());
-        res.end();
-    }
-}).listen(8080);
-
-
-*/

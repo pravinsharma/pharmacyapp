@@ -3,6 +3,7 @@ html
   include includes/head.pug
   body
     include includes/header.pug
+    include includes/mixin/medicinetype.pug
 
     .main.fluid-container
         h1 Delete Medicines
@@ -39,7 +40,8 @@ html
                                     td #{batchno}
                                     td #{expiry}
                                     td #{price}
-                                    td #{type}
+                                    td
+                                        +medicinetype( type )
                     input.btn.btn-primary(type='submit', value='Submit', style='margin: 10px; float: right;')
 
     include includes/footer.pug

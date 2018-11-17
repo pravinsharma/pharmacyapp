@@ -3,6 +3,7 @@ html
   include includes/head.pug
   body
     include includes/header.pug
+    include includes/mixin/medicinetype.pug
     
     .main.fluid-container
         h1 View Medicine
@@ -22,15 +23,23 @@ html
                             th(scope='col') Action
                     tbody
                         for item in jsonObj
-                            -   var id = JSON.stringify( item.id ).replace(/\"/g, "")
+                            -
+                                var id = JSON.stringify( item.id ).replace(/\"/g, "")
+                                var name = JSON.stringify( item.name ).replace(/\"/g, "")
+                                var manufacturer = JSON.stringify( item.manufacturer ).replace(/\"/g, "")
+                                var batchno = JSON.stringify( item.batchno ).replace(/\"/g, "")
+                                var expiry = JSON.stringify( item.expiry ).replace(/\"/g, "")
+                                var price = JSON.stringify( item.price ).replace(/\"/g, "")
+                                var type = JSON.stringify( item.type ).replace(/\"/g, "")
                             tr
                                 th(scope='row') #{id}
-                                td !{JSON.stringify( item.name ).replace(/\"/g, "")}
-                                td !{JSON.stringify( item.manufacturer ).replace(/\"/g, "")}
-                                td !{JSON.stringify( item.batchno ).replace(/\"/g, "")}
-                                td !{JSON.stringify( item.expiry ).replace(/\"/g, "")}
-                                td !{JSON.stringify( item.price ).replace(/\"/g, "")}
-                                td !{JSON.stringify( item.type ).replace(/\"/g, "")}
+                                td #{name}
+                                td #{manufacturer}
+                                td #{batchno}
+                                td #{expiry}
+                                td #{price}
+                                td
+                                    +medicinetype( type )
                                 td.form-group
                                     form(action='/action_delete', method='post', style='float: left;')
                                         input( type='hidden' name='medicineid' id='medicineid' value=id)

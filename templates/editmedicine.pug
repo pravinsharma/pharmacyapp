@@ -22,7 +22,7 @@ html
                             th(scope='col') Type
                             th(scope='col') Action
                     tbody
-                        for item in jsonObj
+                        for item, i in jsonObj
                             -
                                 var id = JSON.stringify( item.id ).replace(/\"/g, "")
                                 var name = JSON.stringify( item.name ).replace(/\"/g, "")
@@ -34,25 +34,28 @@ html
                             form(action='/action_edit', method='post')
                                 tr
                                     th(scope='row')
-                                        input( type='hidden' name='medicineid' id='medicineid' value=id)
+                                        input( type='hidden' name=('medicineid_' + i) id=('medicineid_' + i)  value=id)
                                         | #{id}
                                     td
-                                        input.form-control( type='text' name='name' id='name' value=name)
+                                        input.form-control( type='text' name=('name_' + i) id=('name_' + i) value=name)
                                     td
-                                        input.form-control( type='text' name='manufacturer' id='manufacturer' value=manufacturer)
+                                        input.form-control( type='text' name=('manufacturer_' + i) id=('manufacturer_' + i) value=manufacturer)
                                     td
-                                        input.form-control( type='number' name='batchno' id='batchno' value=batchno)
+                                        input.form-control( type='number' name=('batchno_' + i) id=('batchno_' + i) value=batchno)
                                     td
-                                        input.form-control( type='date' name='expiry' id='expiry' value=expiry)
+                                        input.form-control( type='date' name=('expiry_' + i) id=('expiry_' + i) value=expiry)
                                     td
-                                        input.form-control( type='text' name='price' id='price' value=price)
+                                        input.form-control( type='text' name=('price_' + i) id=('price_' + i) value=price)
                                     td
-                                        select#propertyType.select.form-control.input-lg(name='type')
+                                        select.select.form-control.input-lg(name=('type_' + i) id=('type_' + i))
                                             option(value='0') -- Select --
                                             option(value='1') Capsule
                                             option(value='2') Tablet
                                             option(value='3') Syrup
                                             option(value='4') Gel
+                                        
+                                        script.
+                                            $('#type_' + #{i}).val( #{type} );
                                     td
                                         input.btn.btn-primary(type='submit', value='Submit')
 

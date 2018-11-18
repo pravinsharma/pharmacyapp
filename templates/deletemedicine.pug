@@ -3,7 +3,7 @@ html
   include includes/head.pug
   body
     include includes/header.pug
-    include includes/mixin/medicinetype.pug
+    include includes/components/medicinetype.pug
 
     .main.fluid-container
         h1 Delete Medicines
@@ -16,22 +16,10 @@ html
                         thead
                             tr
                                 th(scope='col') *
-                                th(scope='col') Name
-                                th(scope='col') Manufacturer
-                                th(scope='col') Batch#
-                                th(scope='col') Expires
-                                th(scope='col') Price
-                                th(scope='col') Type
+                                include includes/expanders/table_headers.pug
                         tbody
                             for item in jsonObj
-                                -
-                                    var id = JSON.stringify( item.id ).replace(/\"/g, "")
-                                    var name = JSON.stringify( item.name ).replace(/\"/g, "")
-                                    var manufacturer = JSON.stringify( item.manufacturer ).replace(/\"/g, "")
-                                    var batchno = JSON.stringify( item.batchno ).replace(/\"/g, "")
-                                    var expiry = JSON.stringify( item.expiry ).replace(/\"/g, "")
-                                    var price = JSON.stringify( item.price ).replace(/\"/g, "")
-                                    var type = JSON.stringify( item.type ).replace(/\"/g, "")
+                                include includes/expanders/json2objects.pug
                                 tr
                                     th(scope='row')
                                         input( type='checkbox' name='medicineid' id='medicineid' value=id)
@@ -41,7 +29,7 @@ html
                                     td #{expiry}
                                     td #{price}
                                     td
-                                        +medicinetype( type )
-                    input.btn.btn-primary(type='submit', value='Submit', style='margin: 10px; float: right;')
+                                        +get_medicinetype( type )
+                    input.btn.btn-primary(type='submit', value='Delete Selected', style='margin: 10px; float: right;')
 
     include includes/footer.pug

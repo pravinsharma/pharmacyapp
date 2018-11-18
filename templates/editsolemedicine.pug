@@ -1,0 +1,65 @@
+doctype html
+html
+  include includes/head.pug
+  body
+    include includes/header.pug
+    include includes/components/medicinetype.pug
+
+    .main.container
+        h1 Edit A Medicine
+        p Please edit details to store in our records
+
+        for item in jsonObj
+            include includes/expanders/json2objects.pug
+
+            form(action='/action_edit', method='post')
+                .row.form-group
+                    .col-xl-3
+                        label.control-label.requiredField(for='name')
+                            | Medicine Name
+                            span.asteriskField *
+                    .col-xl-9
+                        input#name.form-control( type='text' name='name' value=name )
+                .row.form-group
+                    .col-xl-3
+                        label.control-label.requiredField(for='manufacturer')
+                            | Manufacturer
+                            span.asteriskField *
+                    .col-xl-9
+                        input#manufacturer.form-control( type='text' name='manufacturer' value=manufacturer )
+                .row.form-group
+                    .col-xl-3
+                        label.control-label.requiredField(for='batchno')
+                            | Batch Number
+                            span.asteriskField *
+                    .col-xl-9
+                        input#batchno.form-control( type='number' name='batchno' value=batchno )
+                .row.form-group
+                    .col-xl-3
+                        label.control-label.requiredField(for='expiry')
+                            | Expiration Date
+                            span.asteriskField *
+                    .col-xl-9
+                        input#expiry.form-control( type='date' name='expiry' value=expiry )
+                .row.form-group
+                    .col-xl-3
+                        label.control-label.requiredField(for='price')
+                            | Price
+                            span.asteriskField *
+                    .col-xl-9
+                        input#price.form-control( type='text' name='price' value=price )
+                .row.form-group
+                    .col-xl-3
+                        label.control-label.requiredField(for='type')
+                            | Medicine Type
+                            span.asteriskField *
+                    .col-xl-9
+                        +render_medicinetype('type')
+                        
+                        script.
+                            $('#type').val( #{type} );
+                .row.form-group
+                    .col-xl-12
+                        input.btn.btn-primary(type='submit', value='Save Medicine')
+
+    include includes/footer.pug

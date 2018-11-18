@@ -3,6 +3,7 @@ html
   include includes/head.pug
   body
     include includes/header.pug
+    include includes/components/medicinetype.pug
 
     .main.container
         h1 Add Medicine
@@ -15,50 +16,45 @@ html
                         | Medicine Name
                         span.asteriskField *
                 .col-xl-9
-                    input.form-control( type='text' name='name' )
+                    input#name.form-control( type='text' name='name' )
             .row.form-group
                 .col-xl-3
                     label.control-label.requiredField(for='manufacturer')
                         | Manufacturer
                         span.asteriskField *
                 .col-xl-9
-                    input.form-control( type='text' name='manufacturer' )
+                    input#manufacturer.form-control( type='text' name='manufacturer' )
             .row.form-group
                 .col-xl-3
                     label.control-label.requiredField(for='batchno')
                         | Batch Number
                         span.asteriskField *
                 .col-xl-9
-                    input.form-control( type='number' name='batchno' )
+                    input#batchno.form-control( type='number' name='batchno' )
             .row.form-group
                 .col-xl-3
                     label.control-label.requiredField(for='expiry')
                         | Expiration Date
                         span.asteriskField *
                 .col-xl-9
-                    input.form-control( type='date' name='expiry' )
+                    input#expiry.form-control( type='date' name='expiry' )
             .row.form-group
                 .col-xl-3
                     label.control-label.requiredField(for='price')
                         | Price
                         span.asteriskField *
                 .col-xl-9
-                    input.form-control( type='text' name='price' )
+                    input#price.form-control( type='text' name='price' )
             .row.form-group
                 .col-xl-3
                     label.control-label.requiredField(for='type')
                         | Medicine Type
                         span.asteriskField *
                 .col-xl-9
-                    select#propertyType.select.form-control.input-lg(name='type')
-                        option(value='0') -- Select --
-                        option(value='1') Capsule
-                        option(value='2') Tablet
-                        option(value='3') Syrup
-                        option(value='4') Gel
+                    +render_medicinetype('type')
             .row.form-group
                 .col-xl-12
-                    input.btn.btn-primary(type='submit', value='Submit')
+                    input.btn.btn-primary(type='submit', value='Add Medicine')
 
 
     include includes/footer.pug

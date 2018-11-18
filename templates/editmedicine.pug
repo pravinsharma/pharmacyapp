@@ -3,6 +3,7 @@ html
   include includes/head.pug
   body
     include includes/header.pug
+    include includes/components/medicinetype.pug
 
     .main.fluid-container
         h1 Modify Medicine
@@ -14,23 +15,11 @@ html
                     thead
                         tr
                             th(scope='col') #
-                            th(scope='col') Name
-                            th(scope='col') Manufacturer
-                            th(scope='col') Batch#
-                            th(scope='col') Expires
-                            th(scope='col') Price
-                            th(scope='col') Type
-                            th(scope='col') Action
+                            include includes/expanders/table_headers.pug
                     tbody
                         for item, i in jsonObj
-                            -
-                                var id = JSON.stringify( item.id ).replace(/\"/g, "")
-                                var name = JSON.stringify( item.name ).replace(/\"/g, "")
-                                var manufacturer = JSON.stringify( item.manufacturer ).replace(/\"/g, "")
-                                var batchno = JSON.stringify( item.batchno ).replace(/\"/g, "")
-                                var expiry = JSON.stringify( item.expiry ).replace(/\"/g, "")
-                                var price = JSON.stringify( item.price ).replace(/\"/g, "")
-                                var type = JSON.stringify( item.type ).replace(/\"/g, "")
+                            include includes/expanders/json2objects.pug
+                            
                             form(action='/action_edit', method='post')
                                 tr
                                     th(scope='row')
@@ -47,17 +36,12 @@ html
                                     td
                                         input.form-control( type='text' name=('price_' + i) id=('price_' + i) value=price)
                                     td
-                                        select.select.form-control.input-lg(name=('type_' + i) id=('type_' + i))
-                                            option(value='0') -- Select --
-                                            option(value='1') Capsule
-                                            option(value='2') Tablet
-                                            option(value='3') Syrup
-                                            option(value='4') Gel
+                                        +render_medicinetype('type_' + i)
                                         
                                         script.
                                             $('#type_' + #{i}).val( #{type} );
                                     td
-                                        input.btn.btn-primary(type='submit', value='Submit')
+                                        input.btn.btn-primary(type='submit', value='Save')
 
 
     include includes/footer.pug

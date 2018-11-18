@@ -3,7 +3,7 @@ html
   include includes/head.pug
   body
     include includes/header.pug
-    include includes/mixin/medicinetype.pug
+    include includes/components/medicinetype.pug
     
     .main.fluid-container
         h1 View Medicine
@@ -14,23 +14,11 @@ html
                     thead
                         tr
                             th(scope='col') #
-                            th(scope='col') Name
-                            th(scope='col') Manufacturer
-                            th(scope='col') Batch#
-                            th(scope='col') Expires
-                            th(scope='col') Price
-                            th(scope='col') Type
+                            include includes/expanders/table_headers.pug
                             th(scope='col') Action
                     tbody
                         for item in jsonObj
-                            -
-                                var id = JSON.stringify( item.id ).replace(/\"/g, "")
-                                var name = JSON.stringify( item.name ).replace(/\"/g, "")
-                                var manufacturer = JSON.stringify( item.manufacturer ).replace(/\"/g, "")
-                                var batchno = JSON.stringify( item.batchno ).replace(/\"/g, "")
-                                var expiry = JSON.stringify( item.expiry ).replace(/\"/g, "")
-                                var price = JSON.stringify( item.price ).replace(/\"/g, "")
-                                var type = JSON.stringify( item.type ).replace(/\"/g, "")
+                            include includes/expanders/json2objects.pug
                             tr
                                 th(scope='row') #{id}
                                 td #{name}
@@ -39,12 +27,12 @@ html
                                 td #{expiry}
                                 td #{price}
                                 td
-                                    +medicinetype( type )
+                                    +get_medicinetype( type )
                                 td.form-group
                                     form(action='/action_delete', method='post', style='float: left;')
                                         input( type='hidden' name='medicineid' id='medicineid' value=id)
                                         input.btn.btn-primary(type='submit', value='Delete', style='margin: 0 10px;')
-                                    form(action='/action_edit', method='post')
+                                    form(action='/action_redirect', method='post')
                                         input( type='hidden' name='medicineid' id='medicineid'  value=id)
                                         input.btn.btn-primary(type='submit', value='Edit')
 

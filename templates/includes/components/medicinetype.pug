@@ -1,0 +1,15 @@
+mixin render_medicinetype(typeid)
+    select.select.form-control.input-lg(name=typeid id=typeid)
+        option(value='0') -- Select --
+        option(value='1') Capsule
+        option(value='2') Tablet
+        option(value='3') Syrup
+        option(value='4') Gel
+
+mixin get_medicinetype(type)
+    case type
+        when '1': span Capsule
+        when '2': span Tablet
+        when '3': span Syrup
+        when '4': span Gel
+        default: span No Selection

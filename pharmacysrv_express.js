@@ -55,7 +55,7 @@ app.post('/action_edit', function (req, res) {
         
         myapp.log('A chunk of data has arrived: ', data);
 
-        myapp.json.util.remove(data.medicineid);
+        myapp.util.json.remove(data.medicineid);
         myapp.json.data.push( data );
         
         myapp.util.page.view(res, './templates/editmedicine.pug');
@@ -76,10 +76,10 @@ app.post('/action_delete', function (req, res) {
 
         if( data.medicineid instanceof Array) {
             for(var i=0; i<data.medicineid.length; i++) {
-                myapp.json.util.remove(data.medicineid[i]);
+                myapp.util.json.remove(data.medicineid[i]);
             }
         } else {
-            myapp.json.util.remove(data.medicineid);
+            myapp.util.json.remove(data.medicineid);
         }
 
         myapp.util.page.view(res, './templates/deletemedicine.pug');

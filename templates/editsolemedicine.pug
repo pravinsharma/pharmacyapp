@@ -13,6 +13,8 @@ html
             include includes/expanders/json2objects.pug
 
             form(action='/action_edit', method='post')
+                input#medicineid( type='hidden' name='medicineid' value=id )
+
                 .row.form-group
                     .col-xl-3
                         label.control-label.requiredField(for='name')

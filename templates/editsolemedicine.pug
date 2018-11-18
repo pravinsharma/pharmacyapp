@@ -6,14 +6,14 @@ html
     include includes/components/medicinetype.pug
 
     .main.container
-        h1 Edit A Medicine
+        h1 Edit Medicine
         p Please edit details to store in our records
 
         for item in jsonObj
             include includes/expanders/json2objects.pug
 
-            form(action='/action_edit', method='post')
-                input#medicineid( type='hidden' name='medicineid' value=id )
+            form(action='/action_save', method='post')
+                input#id( type='hidden' name='id' value=id )
 
                 .row.form-group
                     .col-xl-3

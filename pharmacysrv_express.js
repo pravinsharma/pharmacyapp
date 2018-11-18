@@ -55,10 +55,31 @@ app.post('/action_edit', function (req, res) {
         
         myapp.log('A chunk of data has arrived: ', data);
 
-        myapp.util.json.remove(data.medicineid);
+        myapp.util.json.remove(data.id);
         myapp.json.data.push( data );
         
         myapp.util.page.view(res, './templates/editmedicine.pug');
+    });
+    req.on('end', () => {
+        myapp.log('No more data');
+    });
+});
+
+// modification of medicine
+app.post('/action_save', function (req, res) {
+    myapp.log('action: save...');
+    
+    req.on('data', chunk => {
+        const data = qs.parse(chunk.toString());
+        
+        myapp.log('A chunk of data has arrived: ', data);
+
+        myapp.util.json.remove(data.id);
+        myapp.json.data.push( data );
+
+        myapp.log('view data: ', myapp.json.data);
+        
+        myapp.util.page.view(res, './templates/viewmedicine.pug');
     });
     req.on('end', () => {
         myapp.log('No more data');
@@ -72,14 +93,14 @@ app.post('/action_delete', function (req, res) {
     req.on('data', chunk => {
         const data = qs.parse(chunk.toString());
         
-        myapp.log('A chunk of data has arrived: ', data.medicineid);
+        myapp.log('A chunk of data has arrived: ', data.id);
 
-        if( data.medicineid instanceof Array) {
-            for(var i=0; i<data.medicineid.length; i++) {
-                myapp.util.json.remove(data.medicineid[i]);
+        if( data.id instanceof Array) {
+            for(var i=0; i<data.id.length; i++) {
+                myapp.util.json.remove(data.id[i]);
             }
         } else {
-            myapp.util.json.remove(data.medicineid);
+            myapp.util.json.remove(data.id);
         }
 
         myapp.util.page.view(res, './templates/deletemedicine.pug');
@@ -96,10 +117,10 @@ app.post('/action_redirect', function (req, res) {
     req.on('data', chunk => {
         const data = qs.parse(chunk.toString());
         
-        myapp.log('A chunk of data has arrived: ', data.medicineid);
+        myapp.log('A chunk of data has arrived: ', data.id);
 
-        if( data.medicineid ) {
-            myapp.util.page.view(res, './templates/editsolemedicine.pug', data.medicineid);
+        if( data.id ) {
+            myapp.util.page.view(res, './templates/editsolemedicine.pug', data.id);
         }
     });
     req.on('end', () => {
@@ -163,6 +184,7 @@ myapp.util = {
     },
     "page": {
         "view": function(res, template, id) {       //render page view
+            myapp.log('view...');
 
             // Compile a function
             const html = pug.compileFile(template);

@@ -30,11 +30,10 @@ html
                                     +get_medicinetype( type )
                                 td.form-group
                                     form(action='/action_delete', method='post', style='float: left;')
-                                        input( type='hidden' name='medicineid' id='medicineid' value=id)
+                                        input( type='hidden' name='id' value=id)
                                         input.btn.btn-primary(type='submit', value='Delete', style='margin: 0 10px;')
                                     form(action='/action_redirect', method='post')
-                                        input( type='hidden' name='medicineid' id='medicineid'  value=id)
+                                        input( type='hidden' name='id' value=id)
                                         input.btn.btn-primary(type='submit', value='Edit')
-
 
     include includes/footer.pug

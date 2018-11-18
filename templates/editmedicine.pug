@@ -6,8 +6,11 @@ html
     include includes/components/medicinetype.pug
 
     .main.fluid-container
-        h1 Modify Medicine
+        h1 Edit Medicine
         p Please add details to update the records
+
+        
+        p 
 
         .row.form-group
             .col-xl-12
@@ -19,29 +22,28 @@ html
                     tbody
                         for item, i in jsonObj
                             include includes/expanders/json2objects.pug
-                            
+
                             form(action='/action_edit', method='post')
-                                tr
+                                tr(id='row_' + i)
                                     th(scope='row')
-                                        input( type='hidden' name=('medicineid_' + i) id=('medicineid_' + i)  value=id)
+                                        input( type='hidden' name='id'  value=id)
                                         | #{id}
                                     td
-                                        input.form-control( type='text' name=('name_' + i) id=('name_' + i) value=name)
+                                        input.form-control( type='text' name='name' value=name)
                                     td
-                                        input.form-control( type='text' name=('manufacturer_' + i) id=('manufacturer_' + i) value=manufacturer)
+                                        input.form-control( type='text' name='manufacturer' value=manufacturer)
                                     td
-                                        input.form-control( type='number' name=('batchno_' + i) id=('batchno_' + i) value=batchno)
+                                        input.form-control( type='number' name='batchno' value=batchno)
                                     td
-                                        input.form-control( type='date' name=('expiry_' + i) id=('expiry_' + i) value=expiry)
+                                        input.form-control( type='date' name='expiry' value=expiry)
                                     td
-                                        input.form-control( type='text' name=('price_' + i) id=('price_' + i) value=price)
+                                        input.form-control( type='text' name='price' value=price)
                                     td
-                                        +render_medicinetype('type_' + i)
+                                        +render_medicinetype('type')
                                         
                                         script.
-                                            $('#type_' + #{i}).val( #{type} );
+                                            $('#row_' + #{i} + ' select').val( #{type} );
                                     td
                                         input.btn.btn-primary(type='submit', value='Save')
-
 
     include includes/footer.pug
